@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>skien.cc fractal stock game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      plot_body {
+        font: 10px sans-serif;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+      .axis path,
+      .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+      }
+
+      .x.axis path {
+        fill: none;
+      }
+
+      .line {
+        fill: none;
+        stroke: darkblue;
+        stroke-width: 1.5px;
+      }
+      .area {
+        fill: steelblue;
+      }
+    </style>
+    <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">skien.cc</a>
+          <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right">
+              Logged in as <a href="#" class="navbar-link">zoidberg</a>
+            </p>
+            <ul class="nav">
+              <li class="active"><a href="#">Video</a></li>
+              <li><a href="#social">Social</a></li>
+              <li><a href="#news">News</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span1">
+        
+        </div><!--/span-->
+        <div class="span11">
+          <h2>
+            {% if answer %}
+            {% if correct %}
+             Correct!
+            {% else %}
+             Nope!
+            {% endif %}
+            {{ symbol }} 
+            {% else %}
+            Random
+            {% endif %}
+            Stock Price over 50 
+            {% if answer %}
+            {{ answer }}
+            {% else %}
+            days, weeks, or months 
+            {% endif %}
+          </h2>
+          <div id="d3_plot" class="plot_body"></div>
+          <br>
+          {% if not answer %}
+          
+          <form class="form-signin" action="{{ url_for('answer',symbol=symbol,
+                                                        series_spacing=series_spacing,
+                                                        start_date=start_date) }}" 
+          method=post enctype=multipart/form-data>
+            Choose Time Interval:
+              <select name='answer'>
+                <option value = '1'>Days</option>
+                <option value = '5'>Weeks</options>
+                <option value = '20'>Months</options>
+              </select>
+              <button class='btn btn-large-primary' type='submit' name='btn' value='guess'>Guess</button>
+          {% else %}
+          <form method='link' action="{{ url_for('random_data') }}">
+            <button class='btn btn-large-primary' type='submit'>Try Again</button>
+          {% endif %}
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; skien.cc 2013</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+    {% block plot %}{% endblock %}
+  </body>
+</html>
