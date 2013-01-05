@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect#, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import distinct, func
 from json import dumps
@@ -22,7 +22,19 @@ series_spacings_text = {1:'days', 5:'weeks', 20:'months'}
 symbols = [s[0] for s in db.session.query(distinct(DailyStockPrice.symbol)).all()]
 end_date = datetime(2013,1,1)
 
-@app.route('/get_data')
+@app.route('/')
+def landing():
+  return render_template('about.html')
+
+@app.route('/about')
+def about():
+  return render_template('about.html')
+
+@app.route('/blog')
+def blog():
+  return render_template('blog.html')
+
+@app.route('/fractal_game/get_data')
 def get_data():
   try:
     symbol = request.args['symbol']
@@ -34,27 +46,25 @@ def get_data():
   days = DailyStockPrice.query.filter_by(symbol=symbol).filter(DailyStockPrice.date >= start_date).order_by('date').limit(days_range).all()
   return dumps([day.json_dict() for day in days[::series_spacing]])
 
-@app.route('/random')
-def random_data():
+@app.route('/fractal_game/random')
+def fractal_game():
   symbol = choice(symbols)
   series_spacing = choice(series_spacings)
   days_range = series_length*series_spacing*2
   max_start_date = (end_date - timedelta(days_range)).date() 
   start_date = DailyStockPrice.query.filter_by(symbol=symbol).filter(DailyStockPrice.date < max_start_date).order_by(func.rand()).first().date.strftime(date_format)
+  #print url_for('get_data',symbol=symbol,start_date=start_date,series_spacing=series_spacing)
   return render_template('random.html',
                          symbol=symbol,
                          series_spacing=series_spacing,
                          start_date=start_date)
 
-@app.route('/answer', methods=['POST'])
+@app.route('/fractal_game/answer', methods=['POST'])
 def answer():
-  # try:
   symbol = request.args['symbol']
   series_spacing = int(request.args['series_spacing'])
   start_date = request.args['start_date']    
   correct = int(request.form['answer']) == series_spacing
-  # except KeyError as e:
-  #   return 'error: %s' % e
   return render_template('random.html',
                          answer=series_spacings_text[series_spacing],
                          correct=correct,

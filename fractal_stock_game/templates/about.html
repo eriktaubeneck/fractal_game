@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span1">
+    
+    </div><!--/span-->
+    <div class="span5 offset3">
+
+      <h1>About.</h1>
+      <h3>Fractals are sweet.</h3>
+      <p class="lead">
+        I'm not just talking about the <a href="http://en.wikipedia.org/wiki/Mandelbrot_set">Mandelbrot Set</a> (which is pretty sweet on it's own), but 
+        fractal geometry nature (hey that's the name of a <a href="http://www.amazon.com/Fractal-Geometry-Nature-Benoit-Mandelbrot/dp/0716711869">book<a>). 
+        A straight forward example of this principle can be observed by the coastline of Great Britain (or any other coastline). Suppose we wanted to measure 
+        the length of the coast line of Britain. We get out a map and a protractor, use the map key to make the points of the protractor something like 200 
+        km apart, and take the protractor for a walk around the island. We would get something like 2,400 km (thanks 
+        <a href="http://en.wikipedia.org/wiki/How_Long_Is_the_Coast_of_Britain%3F_Statistical_Self-Similarity_and_Fractional_Dimension"> wikipedia</a>!). 
+        Now, if we get a bigger map and take step sizes of 50 km, down from the 200 km. The length of the coastline now increases to something closer to 
+        3,500 km.
+      </p>
+      <p class="lead">
+        One of the characteristics of fractal geometry is self-similarity. Using our coastline example, if I were to present you with a random piece of 
+        coastline, you would be unable to tell me if you were looking at a kilometer, ten kilometers, or a million kilometers (assuming there aren't any 
+        recognizable landmarks or manmade structures). This type of property shows up everywhere in nature. Mountains, clouds, our blood vessels. 
+        NOVA produced a fantastic documentary, 
+        <a href="http://en.wikipedia.org/wiki/How_Long_Is_the_Coast_of_Britain%3F_Statistical_Self-Similarity_and_Fractional_Dimension">
+        Hunting the Hidden Dimension</a>, that covers the topic nicely.
+      </p>
+      <p class="lead">
+        Mandelbrot also wrote a book <a href="http://www.amazon.com/Fractals-Scaling-Finance-Discontinuity-Concentration/dp/1441931198">
+        Fractals and Scaling In Finance: Discontinuity, Concentration, Risk</a>. As a mathematician/economist, I have always pondered on these 
+        types of things, but my recent exploration into python hacking (specifically with Flask), I decided to build a little 
+        <a href="/fractal_game/random">game</a> that explores this property. I've gathered historical stock prices from a few public companies, 
+        and then I randomly choose 50 days, 50 weeks, or 50 months of data. The data is then plotted, but with out either axis. The user is prompted 
+        to guess the weather the data comes from 50 days, weeks or months. Right now, that's all it does, but I do intend eventually store people's 
+        responses and to get an idea of whether people can guess any better than random.
+      </p>
+      <p><em>
+        skien.cc (pronounced skīəns) is the personal website of Erik Taubeneck. I am a mathematician/economist/statistician by schooling, a data scientist 
+        by trade, and a python hacker by night. This is my very first project for skien.cc, so don't be surprised when you don't find much here. 
+        I fully intend to build more small projects like this up here, and write <a href="{{ url_for('blog') }}">blog posts</a>. In fact, I intend 
+        to write a fairly detailed blog post about how I build this little project. But, for now, you can <a href="https://github.com/eriktaubeneck">
+        fork me on github</a> and check out the code for this project.
+      </em></p>
+        
+
+    </div><!--/span-->
+  </div><!--/row-->
+{% endblock %}

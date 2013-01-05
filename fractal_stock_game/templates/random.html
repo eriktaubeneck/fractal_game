@@ -1,4 +1,54 @@
 {% extends "layout.html" %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span1">
+    
+    </div><!--/span-->
+    <div class="span11">
+      <h2>
+        {% if answer %}
+        {% if correct %}
+         Correct!
+        {% else %}
+         Nope!
+        {% endif %}
+        {{ symbol }} 
+        {% else %}
+        Random
+        {% endif %}
+        Stock Price over 50 
+        {% if answer %}
+        {{ answer }}
+        {% else %}
+        days, weeks, or months 
+        {% endif %}
+      </h2>
+      <div id="d3_plot" class="plot_body"></div>
+      <br>
+      {% if not answer %}
+      
+      <form class="form-signin" action="{{ url_for('answer',
+                                                    symbol=symbol,
+                                                    series_spacing=series_spacing,
+                                                    start_date=start_date) }}" 
+      method=post enctype=multipart/form-data>
+        Guess the Time Interval:
+          <select name='answer'>
+            <option value = '1'>50 Days</option>
+            <option value = '5'>50 Weeks</options>
+            <option value = '20'>50 Months</options>
+          </select>
+          <button class='btn btn-large-primary' type='submit' name='btn' value='guess'>Guess</button>
+      {% else %}
+      <form method='link' action="{{ url_for('fractal_game') }}">
+        <button class='btn btn-large-primary' type='submit'>Try Again</button>
+      {% endif %}
+    </div><!--/span-->
+  </div><!--/row-->
+{% endblock %}
+
 {% block plot %}
 <script src="http://d3js.org/d3.v3.js"></script>
 <script>
@@ -36,7 +86,8 @@ var svg = d3.select("#d3_plot").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  d3.json("/get_data?symbol={{ symbol }}&start_date={{ start_date }}&series_spacing={{ series_spacing }}", function(error, data) {
+  d3.json("{{ url_for('get_data') }}" + "?symbol={{ symbol }}&start_date={{ start_date }}&series_spacing={{ series_spacing }}", 
+    function(error, data) {
     data.forEach(function(d) {
       d.date = parseDate(d.date);
       d.high = +d.high;
