@@ -7,7 +7,7 @@ import json
 symbols = ['AAPL'] #, 'GOOG']
 
 base_url = 'http://api.stocklytics.com/historicalPrices/1.0/'
-api_key = '6d101f8ab6bf5d4b195b492304f5ab76776ff2ac'
+api_key = 'api_key'
 start_date = datetime(1980,1,1)
 end_date = datetime.now()
 i = 0
