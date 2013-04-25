@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, render_template, redirect#, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import distinct, func
@@ -9,7 +10,7 @@ app = Flask(__name__)
 app.config.update(
   SECRET_KEY = 'dev key',
   DEBUG = True,
-  SQLALCHEMY_DATABASE_URI = 'mysql://root:a@localhost/fractal_game'
+  SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 )
 db = SQLAlchemy(app)
 
