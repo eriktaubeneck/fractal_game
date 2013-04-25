@@ -1,4 +1,5 @@
-from app.models import DailyStockPrice, db, date_format
+from app import db
+from app.models import DailyStockPrice, date_format
 from datetime import datetime
 import requests
 import json
