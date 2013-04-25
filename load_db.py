@@ -9,6 +9,7 @@ base_url = 'http://api.stocklytics.com/historicalPrices/1.0/'
 api_key = '6d101f8ab6bf5d4b195b492304f5ab76776ff2ac'
 start_date = datetime(1980,1,1)
 end_date = datetime.now()
+i = 0
 
 for symbol in symbols:
     parameters = {'api_key':api_key,
@@ -20,6 +21,8 @@ for symbol in symbols:
                   }
     r = requests.get(base_url,params=parameters)
     for day in r.json:
+        print i
+        i += 1
         db.session.add(DailyStockPrice(symbol=symbol,
                                        date=datetime.strptime(day,date_format).date(),
                                        open=r.json[day]['open'],
