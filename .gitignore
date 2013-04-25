@@ -30,6 +30,7 @@ venv
 *.log
 *.sqlite
 *.sql
+*.db
 
 # OS generated files #
 ######################
