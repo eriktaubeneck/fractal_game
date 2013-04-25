@@ -21,15 +21,16 @@ for symbol in symbols:
                   'end':end_date.strftime(date_format)
                   }
     r = requests.get(base_url,params=parameters)
-    for day in r.json:
+    j = r.json()
+    for day in j:
         print i
         i += 1
         db.session.add(DailyStockPrice(symbol=symbol,
                                        date=datetime.strptime(day,date_format).date(),
-                                       open=r.json[day]['open'],
-                                       close=r.json[day]['close'],
-                                       high=r.json[day]['high'],
-                                       low=r.json[day]['low'],
-                                       volume=r.json[day]['volume'])
+                                       open=j[day]['open'],
+                                       close=j[day]['close'],
+                                       high=j[day]['high'],
+                                       low=j[day]['low'],
+                                       volume=j[day]['volume'])
                                        )
 db.session.commit()
