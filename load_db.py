@@ -11,21 +11,21 @@ start_date = datetime(1980,1,1)
 end_date = datetime.now()
 
 for symbol in symbols:
-  parameters = {'api_key':api_key,
-                'stock':symbol,
-                'format':'JSON',
-                'order':'DESC',
-                'start':start_date.strftime(date_format),
-                'end':end_date.strftime(date_format)
-                }
-  r = requests.get(base_url,params=parameters)
-  for day in r.json:
-      db.session.add(DailyStockPrice(symbol=symbol,
-                                     date=datetime.strptime(day,date_format).date(),
-                                     open=r.json[day]['open'],
-                                     close=r.json[day]['close'],
-                                     high=r.json[day]['high'],
-                                     low=r.json[day]['low'],
-                                     volume=r.json[day]['volume'])
-                                     )
+    parameters = {'api_key':api_key,
+                  'stock':symbol,
+                  'format':'JSON',
+                  'order':'DESC',
+                  'start':start_date.strftime(date_format),
+                  'end':end_date.strftime(date_format)
+                  }
+    r = requests.get(base_url,params=parameters)
+    for day in r.json:
+        db.session.add(DailyStockPrice(symbol=symbol,
+                                       date=datetime.strptime(day,date_format).date(),
+                                       open=r.json[day]['open'],
+                                       close=r.json[day]['close'],
+                                       high=r.json[day]['high'],
+                                       low=r.json[day]['low'],
+                                       volume=r.json[day]['volume'])
+                                       )
 db.session.commit()

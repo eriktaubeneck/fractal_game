@@ -17,28 +17,28 @@ type_conversions = {int: lambda x: x,
 date_format = "%Y-%m-%d"
 
 class DailyStockPrice(db.Model):
-  __tablename__ = 'daily_stock_price'
+    __tablename__ = 'daily_stock_price'
   
-  id = db.Column(db.Integer, primary_key=True)
-  symbol = db.Column(db.String(10))
-  date = db.Column(db.Date)
-  open = db.Column(db.Float)
-  close = db.Column(db.Float)
-  high = db.Column(db.Float)
-  low = db.Column(db.Float)
-  volume = db.Column(db.Integer)
+    id = db.Column(db.Integer, primary_key=True)
+    symbol = db.Column(db.String(10))
+    date = db.Column(db.Date)
+    open = db.Column(db.Float)
+    close = db.Column(db.Float)
+    high = db.Column(db.Float)
+    low = db.Column(db.Float)
+    volume = db.Column(db.Integer)
   
-  def __init__(self, symbol, date, open, close, high, low, volume):
-    self.symbol = symbol
-    self.date = date
-    self.open = open
-    self.close = close
-    self.high = high
-    self.low = low
-    self.volume = volume
+    def __init__(self, symbol, date, open, close, high, low, volume):
+        self.symbol = symbol
+        self.date = date
+        self.open = open
+        self.close = close
+        self.high = high
+        self.low = low
+        self.volume = volume
 
-  def json_dict(self):
-    ignored_attrs = ['_sa_instance_state']
-    return {attr:type_conversions[type(getattr(self,attr))](getattr(self,attr)) for attr in self.__dict__ if attr not in ignored_attrs}
+    def json_dict(self):
+        ignored_attrs = ['_sa_instance_state']
+        return {attr:type_conversions[type(getattr(self,attr))](getattr(self,attr)) for attr in self.__dict__ if attr not in ignored_attrs}
 
 db.create_all()
