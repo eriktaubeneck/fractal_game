@@ -1,4 +1,4 @@
-from fractal_stock_game import app, db
+from app import db
 from datetime import datetime, date
 
 # class Series(db.Model):

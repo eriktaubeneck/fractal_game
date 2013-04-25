@@ -1,4 +1,4 @@
-from fractal_stock_game.models import DailyStockPrice, db, date_format
+from app.models import DailyStockPrice, db, date_format
 from datetime import datetime
 import requests
 import json
