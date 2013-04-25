@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, redirect#, url_for
+from flask import Flask, request, render_template, redirect, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import distinct, func
 from json import dumps
@@ -46,6 +46,10 @@ def get_data():
     days_range = series_length*series_spacing*2 # x2 as conservative buffer for days market is closed
     days = DailyStockPrice.query.filter_by(symbol=symbol).filter(DailyStockPrice.date >= start_date).order_by('date').limit(days_range).all()
     return dumps([day.json_dict() for day in days[::series_spacing]])
+
+@app.route('/fractal_game/')
+def fractal_game_index():
+    return redirect(url_for(fractal_game))
 
 @app.route('/fractal_game/random')
 def fractal_game():
