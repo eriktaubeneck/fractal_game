@@ -49,7 +49,7 @@ def get_data():
 
 @app.route('/fractal_game/')
 def fractal_game_index():
-    return redirect(url_for(fractal_game))
+    return redirect(url_for('fractal_game'))
 
 @app.route('/fractal_game/random')
 def fractal_game():
