@@ -25,6 +25,9 @@
         days, weeks, or months 
         {% endif %}
       </h2>
+      <h3>
+        You're running score is {{ session['guesses_correct'] }} out of {{ session['guesses'] }} attempts.
+      </h3>
       <div id="d3_plot" class="plot_body"></div>
       <br>
       {% if not answer %}

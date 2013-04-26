@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, session
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import distinct, func
 from json import dumps
@@ -58,6 +58,8 @@ def fractal_game():
     days_range = series_length*series_spacing*2
     max_start_date = (end_date - timedelta(days_range)).date() 
     start_date = DailyStockPrice.query.filter_by(symbol=symbol).filter(DailyStockPrice.date < max_start_date).order_by(func.random()).first().date.strftime(date_format)
+    session['guesses'] = session.setdefault('guesses',0)
+    session['guesses_correct'] = session.setdefault('guesses_correct',0)
     #print url_for('get_data',symbol=symbol,start_date=start_date,series_spacing=series_spacing)
     return render_template('random.html',
                            symbol=symbol,
@@ -70,6 +72,8 @@ def answer():
     series_spacing = int(request.args['series_spacing'])
     start_date = request.args['start_date']    
     correct = int(request.form['answer']) == series_spacing
+    session['guesses'] += 1
+    session['guesses_correct'] += int(correct)
     return render_template('random.html',
                            answer=series_spacings_text[series_spacing],
                            correct=correct,
