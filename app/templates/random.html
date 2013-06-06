@@ -9,20 +9,22 @@
     <div class="span11">
       <h2>
         {% if answer %}
-        {% if correct %}
-         Correct!
+            {% if correct %}
+              Correct!
+            {% else %}
+              Nope!
+            {% endif %}
+
+          {{ symbol }} 
         {% else %}
-         Nope!
+          Random
         {% endif %}
-        {{ symbol }} 
-        {% else %}
-        Random
-        {% endif %}
+
         Stock Price over 50 
         {% if answer %}
-        {{ answer }}
+          {{ answer }}
         {% else %}
-        days, weeks, or months 
+          days, weeks, or months 
         {% endif %}
       </h2>
       <h3>
@@ -32,17 +34,17 @@
       <br>
       {% if not answer %}
       
-      <form class="form-signin" action="{{ url_for('answer',
-                                                    symbol=symbol,
-                                                    series_spacing=series_spacing,
-                                                    start_date=start_date) }}" 
-      method=post enctype=multipart/form-data>
-        Guess the Time Interval:
-          <select name='answer'>
-            <option value = '1'>50 Days</option>
-            <option value = '5'>50 Weeks</options>
-            <option value = '20'>50 Months</options>
-          </select>
+        <form class="form-signin" action="{{ url_for('answer',
+                                                      symbol=symbol,
+                                                      series_spacing=series_spacing,
+                                                      start_date=start_date) }}" 
+        method=post enctype=multipart/form-data>
+          Guess the Time Interval:
+            <select name='answer'>
+              <option value = '1'>50 Days</option>
+              <option value = '5'>50 Weeks</options>
+              <option value = '20'>50 Months</options>
+            </select>
           <button class='btn btn-large-primary' type='submit' name='btn' value='guess'>Guess</button>
       {% else %}
       <form method='link' action="{{ url_for('fractal_game') }}">

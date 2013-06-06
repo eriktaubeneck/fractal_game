@@ -58,8 +58,8 @@ def fractal_game():
     days_range = series_length*series_spacing*2
     max_start_date = (end_date - timedelta(days_range)).date() 
     start_date = DailyStockPrice.query.filter_by(symbol=symbol).filter(DailyStockPrice.date < max_start_date).order_by(func.random()).first().date.strftime(date_format)
-    session['guesses'] = session.setdefault('guesses',0)
-    session['guesses_correct'] = session.setdefault('guesses_correct',0)
+    session.setdefault('guesses',0)
+    session.setdefault('guesses_correct',0)
     #print url_for('get_data',symbol=symbol,start_date=start_date,series_spacing=series_spacing)
     return render_template('random.html',
                            symbol=symbol,
